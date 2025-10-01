@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"slices"
+)
 
 func main() {
 	var i Item
@@ -20,6 +23,21 @@ func main() {
 
 	fmt.Println((NewItem(20 ,40)))
 	fmt.Println((NewItem(20 ,4000)))
+
+
+	i.Move(35,45)
+	fmt.Println(i)
+
+	p1:= player{
+		Name: "lokesh",
+	}
+
+	fmt.Printf("p1: %+v\n",p1)
+
+	fmt.Println(p1.Found("gold"))
+	fmt.Println(p1.Found("diamond"))
+	fmt.Printf("p1: %+v\n",)
+	
 }
 
 // Types of "new" or factory functions
@@ -46,4 +64,40 @@ const(
 type Item struct {
 	X int
 	Y int
+}
+
+// Move moves i by delta x & delta y
+// "i" is called "the receiver"
+// i is apointer receiver
+//value vs pointer receiver
+// in general use value  semantics
+//try to keep same semantics on all methods
+//when yo must use pointer reveiver
+ //if you have lock field
+ //if you need to mutate the struct
+ //decoding /unmarsally
+
+func (i *Item) Move(dx, dy int){
+	i.X+=dx
+	i.Y+=dy
+}
+
+
+type player struct{
+	Name string
+	keys []string
+	Item
+}
+
+func (p *player) Found(key string) error{
+      switch key {
+	  case "copper","silver","gold":
+		//ok
+	  default:
+		return fmt.Errorf("invalid key %q",key)
+	  }
+	  if !slices.Contains(p.keys,key){
+		  p.keys=append(p.keys,key)
+	  }
+	  return nil
 }
