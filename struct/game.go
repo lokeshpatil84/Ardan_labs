@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"slices"
+	
 )
 
 func main() {
@@ -34,10 +35,21 @@ func main() {
 
 	fmt.Printf("p1: %+v\n",p1)
 
-	fmt.Println(p1.Found("gold"))
-	fmt.Println(p1.Found("diamond"))
-	fmt.Printf("p1: %+v\n",)
-	
+	fmt.Println(p1.Found(Gold))
+	fmt.Println(p1.Found(Copper))
+	fmt.Printf("p1: %+ v\n",)
+
+
+	//----- interfaces
+	ms:= []Mover{ &i,&p1}
+
+  moveAll(ms,123,1230)
+  for _,m:= range ms{
+	fmt.Println(m)
+  }
+
+
+   fmt.Println(Key.String(Copper))
 }
 
 // Types of "new" or factory functions
@@ -85,13 +97,13 @@ func (i *Item) Move(dx, dy int){
 
 type player struct{
 	Name string
-	keys []string
+	keys []Key
 	Item
 }
 
-func (p *player) Found(key string) error{
+func (p *player) Found(key Key) error{
       switch key {
-	  case "copper","silver","gold":
+	  case Copper, Silver, Gold:
 		//ok
 	  default:
 		return fmt.Errorf("invalid key %q",key)
@@ -101,3 +113,52 @@ func (p *player) Found(key string) error{
 	  }
 	  return nil
 }
+
+
+/*
+- Set of methods (and types)
+- we define interface as "what you need ", not "what you provide"
+- interface are small (stdlib avg ~2)
+-if you have interface with more that 4 method ,think again
+
+- start with concrete types,discover interfaces later
+*/
+type Mover interface{
+     Move(int,int)
+}
+func moveAll(ms []Mover, dx,dy int){
+   for _,m:= range ms{
+	m.Move(dx,dy)
+   }
+}
+
+// func Sort(s sortable){
+	
+// }
+
+// type sortable interface{
+// 	Sort(num []int)
+
+//string implement the fmt.Stringer interface
+func (k Key) String() string{
+	 switch k{
+	 case  Copper:
+		return "Copper"
+	 case Silver:
+		return "Silver"
+	 case Gold:
+		return "Gold"
+	 }
+    return fmt.Sprintf("<Key %v>",k)
+}
+
+type Key byte
+
+const(
+	Copper  Key= iota + 1
+	Silver
+	Gold
+)
+
+
+// rule of thumb: Accept interface, return types 
