@@ -1,9 +1,9 @@
-package nlp_test
+package nlp
 
 import (
 	"fmt"
 
-	"github.com/ardanlabs/nlp"
+	
 )
 
 func ExampleTokenize() {
