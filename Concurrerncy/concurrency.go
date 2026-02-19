@@ -27,7 +27,18 @@ func main(){
 
 
 fmt.Println(sleepSort([]int {20,30,10}))
-	
+
+  go func ()  {
+	 for i := range 4{
+		ch <- i
+	 }
+	 close (ch)
+  }()
+	for v := range ch{
+		fmt.Println(">>", v)
+	}
+	v = <- ch
+	fmt.Println("v:", v)
 }
 
 
