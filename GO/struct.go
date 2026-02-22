@@ -20,14 +20,14 @@ func main() {
 	}
 	fmt.Printf("%+v\n", e2)
 	fmt.Println("counter", e2.counter)
-
+ //declare a variable of an anonymous struct type and initialize it
 	e3 := struct {
 		flag    bool
 		counter int64
 		pi      float64
 	}{
 
-		flag:    false,
+		flag:    false, 
 		counter: 20,
 		pi:      3.14,
 	}
