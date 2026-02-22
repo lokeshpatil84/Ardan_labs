@@ -1,6 +1,8 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
 type example struct {
 	counter int64
@@ -17,4 +19,17 @@ func main() {
 		pi:      3.14,
 	}
 	fmt.Printf("%+v\n", e2)
+	fmt.Println("counter", e2.counter)
+
+	e3 := struct {
+		flag    bool
+		counter int64
+		pi      float64
+	}{
+
+		flag:    false,
+		counter: 20,
+		pi:      3.14,
+	}
+	fmt.Printf("%+v\n", e3)
 }
